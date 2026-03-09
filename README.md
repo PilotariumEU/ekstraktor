@@ -22,21 +22,25 @@ Jeśli z jakiegoś powodu pracujesz poza devcontainerem, możesz oczywiście rę
 Projekt zawiera skonfigurowane narzędzia do zapewnienia jakości kodu:
 
 - **Uruchomienie testów:**
+
   ```bash
   npm run test
   ```
 
 - **Sprawdzenie linting (ESLint):**
+
   ```bash
   npm run lint
   ```
 
 - **Sprawdzenie typów TypeScript:**
+
   ```bash
   npm run typecheck
   ```
 
 - **Budowanie aplikacji do produkcji:**
+
   ```bash
   npm run build
   ```
@@ -75,7 +79,7 @@ Ten projekt korzysta z opensourcowych bibliotek i narzędzi. Szczególne podzię
 - **Lucide React**
 - **React Hook Form**
 - **Zod**
-- **Jest** 
+- **Jest**
 - **ESLint**
 - **Prettier**
 - **TypeScript**
