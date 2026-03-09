@@ -1,16 +1,42 @@
-"use client";
+'use client';
 
-import { useState, useMemo, useEffect } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Files, Plane, ClipboardList, Trash2, History, Save, Check } from "lucide-react";
-import { extractQuestionCodes, TOPIC_MAPPINGS, getLinkForCode } from "@/lib/aviation-data";
-import { useToast } from "@/lib/use-toast";
+import React, { useState, useMemo, useEffect } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  ExternalLink,
+  Files,
+  Plane,
+  ClipboardList,
+  Trash2,
+  History,
+  Save,
+  Check,
+} from 'lucide-react';
+import {
+  extractQuestionCodes,
+  TOPIC_MAPPINGS,
+  getLinkForCode,
+} from '@/lib/aviation-data';
+import { useToast } from '@/lib/use-toast';
 
-const STORAGE_KEY = "aerolink_history_v1";
+const STORAGE_KEY = 'aerolink_history_v1';
 
 const SAMPLE_NOTE = `PL010-0579 - przestrzeń klasy C = separacja VFR | IFR 
 PL010-0452 - vfr fir warszawa klasa G = FL85
@@ -21,7 +47,7 @@ PL010-0590 - QNH
 PL010-0590 - 15km PL010-0448 - FL75`;
 
 export default function AeroLinkPage() {
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
   const { toast } = useToast();
@@ -37,9 +63,10 @@ export default function AeroLinkPage() {
           }
         } catch (e) {
           toast({
-            title: "Błąd ładowania historii",
-            description: "Nie udało się wczytać zapisanej historii. Dane mogą być uszkodzone.",
-            variant: "destructive",
+            title: 'Błąd ładowania historii',
+            description:
+              'Nie udało się wczytać zapisanej historii. Dane mogą być uszkodzone.',
+            variant: 'destructive',
           });
         }
       }
@@ -47,7 +74,10 @@ export default function AeroLinkPage() {
     setIsHydrated(true);
   }, []);
 
-  const extractedCodes = useMemo(() => extractQuestionCodes(inputText), [inputText]);
+  const extractedCodes = useMemo(
+    () => extractQuestionCodes(inputText),
+    [inputText]
+  );
 
   const syncWithStorage = (newHistory: string[]) => {
     if (typeof window !== 'undefined') {
@@ -59,16 +89,17 @@ export default function AeroLinkPage() {
         }
       } catch (error) {
         toast({
-          title: "Błąd zapisu",
-          description: "Nie udało się zapisać historii do pamięci przeglądarki. Sprawdź ustawienia prywatności.",
-          variant: "destructive",
+          title: 'Błąd zapisu',
+          description:
+            'Nie udało się zapisać historii do pamięci przeglądarki. Sprawdź ustawienia prywatności.',
+          variant: 'destructive',
         });
       }
     }
   };
 
   const saveToHistory = () => {
-    setHistory(prev => {
+    setHistory((prev) => {
       const newItems = Array.from(new Set([...prev, ...extractedCodes]));
       syncWithStorage(newItems);
       return newItems;
@@ -76,7 +107,7 @@ export default function AeroLinkPage() {
   };
 
   const saveSingleToHistory = (code: string) => {
-    setHistory(prev => {
+    setHistory((prev) => {
       if (prev.includes(code)) return prev;
       const newItems = [...prev, code];
       syncWithStorage(newItems);
@@ -85,8 +116,8 @@ export default function AeroLinkPage() {
   };
 
   const removeFromHistory = (code: string) => {
-    setHistory(prev => {
-      const newHistory = prev.filter(c => c !== code);
+    setHistory((prev) => {
+      const newHistory = prev.filter((c) => c !== code);
       syncWithStorage(newHistory);
       return newHistory;
     });
@@ -101,25 +132,25 @@ export default function AeroLinkPage() {
 
   const openAllLinks = (codes: string[]) => {
     let blockedCount = 0;
-    codes.forEach(code => {
-      const popup = window.open(getLinkForCode(code), "_blank");
+    codes.forEach((code) => {
+      const popup = window.open(getLinkForCode(code), '_blank');
       if (popup === null || typeof popup === 'undefined') {
         blockedCount++;
       }
     });
     if (blockedCount > 0) {
       toast({
-        title: "Blokowanie pop-upów",
+        title: 'Blokowanie pop-upów',
         description: `Przeglądarka zablokowała otwarcie ${blockedCount} linków. Zezwól na pop-upy dla tej strony.`,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
 
   const clearInput = () => {
-    setInputText("");
+    setInputText('');
   };
-  
+
   const loadSample = () => setInputText(SAMPLE_NOTE);
 
   if (!isHydrated) return null;
@@ -133,16 +164,30 @@ export default function AeroLinkPage() {
               <Plane className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-primary font-headline">ekstraktor.pilotarium.eu</h1>
-              <p className="text-muted-foreground text-sm">Automatyczny ekstraktor pytań lotniczych z Twoich notatek.</p>
+              <h1 className="text-3xl font-bold tracking-tight text-primary font-headline">
+                ekstraktor.pilotarium.eu
+              </h1>
+              <p className="text-muted-foreground text-sm">
+                Automatyczny ekstraktor pytań lotniczych z Twoich notatek.
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={loadSample} className="text-xs">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={loadSample}
+              className="text-xs"
+            >
               <ClipboardList className="w-4 h-4 mr-1" /> Wczytaj przykład
             </Button>
             {inputText && (
-              <Button variant="ghost" size="sm" onClick={clearInput} className="text-xs text-destructive hover:text-destructive hover:bg-destructive/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearInput}
+                className="text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
                 <Trash2 className="w-4 h-4 mr-1" /> Wyczyść notatkę
               </Button>
             )}
@@ -156,7 +201,8 @@ export default function AeroLinkPage() {
               <CardTitle className="text-lg">Twoje Notatki</CardTitle>
             </div>
             <CardDescription>
-              Wklej tutaj swoje notatki zawierające kody typu PLXXX-YYYY. Dane są przetwarzane wyłącznie w Twojej przeglądarce.
+              Wklej tutaj swoje notatki zawierające kody typu PLXXX-YYYY. Dane
+              są przetwarzane wyłącznie w Twojej przeglądarce.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -177,19 +223,21 @@ export default function AeroLinkPage() {
                   <Files className="w-5 h-5 text-primary" />
                   <div>
                     <CardTitle className="text-lg">Wykryte w tekście</CardTitle>
-                    <CardDescription>Znaleziono {extractedCodes.length} unikalnych kodów.</CardDescription>
+                    <CardDescription>
+                      Znaleziono {extractedCodes.length} unikalnych kodów.
+                    </CardDescription>
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button 
+                  <Button
                     variant="outline"
                     onClick={saveToHistory}
                     className="border-primary/30 text-primary hover:bg-primary/5"
                   >
                     <Save className="w-4 h-4 mr-2" /> Zapisz wszystkie
                   </Button>
-                  <Button 
-                    onClick={() => openAllLinks(extractedCodes)} 
+                  <Button
+                    onClick={() => openAllLinks(extractedCodes)}
                     className="bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all font-semibold"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" /> Otwórz Wszystkie
@@ -200,9 +248,13 @@ export default function AeroLinkPage() {
                 <Table>
                   <TableHeader className="bg-muted/50">
                     <TableRow>
-                      <TableHead className="w-[200px] font-bold">Numer Pytania</TableHead>
+                      <TableHead className="w-[200px] font-bold">
+                        Numer Pytania
+                      </TableHead>
                       <TableHead className="font-bold">Temat</TableHead>
-                      <TableHead className="text-right font-bold">Akcja</TableHead>
+                      <TableHead className="text-right font-bold">
+                        Akcja
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -210,38 +262,54 @@ export default function AeroLinkPage() {
                       const prefix = code.split('-')[0];
                       const isSaved = history.includes(code);
                       return (
-                        <TableRow key={code} className="hover:bg-primary/5 transition-colors group">
+                        <TableRow
+                          key={code}
+                          className="hover:bg-primary/5 transition-colors group"
+                        >
                           <TableCell className="font-mono font-semibold">
-                            <Badge variant="outline" className="text-primary border-primary/30 group-hover:border-primary">
+                            <Badge
+                              variant="outline"
+                              className="text-primary border-primary/30 group-hover:border-primary"
+                            >
                               {code}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-muted-foreground group-hover:text-foreground">
-                            {TOPIC_MAPPINGS[prefix] || "Nieznany temat"}
+                            {TOPIC_MAPPINGS[prefix] || 'Nieznany temat'}
                           </TableCell>
                           <TableCell className="text-right">
                             <div className="flex flex-col items-end gap-1">
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
+                              <Button
+                                variant="ghost"
+                                size="sm"
                                 onClick={() => saveSingleToHistory(code)}
                                 disabled={isSaved}
-                                className={`h-8 ${isSaved ? "text-green-600" : "text-primary hover:text-primary hover:bg-primary/10"}`}
+                                className={`h-8 ${isSaved ? 'text-green-600' : 'text-primary hover:text-primary hover:bg-primary/10'}`}
                               >
                                 {isSaved ? (
-                                  <><Check className="w-3.5 h-3.5 mr-1" /> Zapisano</>
+                                  <>
+                                    <Check className="w-3.5 h-3.5 mr-1" />{' '}
+                                    Zapisano
+                                  </>
                                 ) : (
-                                  <><Save className="w-3.5 h-3.5 mr-1" /> Zapisz</>
+                                  <>
+                                    <Save className="w-3.5 h-3.5 mr-1" /> Zapisz
+                                  </>
                                 )}
                               </Button>
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                asChild 
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                asChild
                                 className="h-8 text-primary hover:text-primary hover:bg-primary/10"
                               >
-                                <a href={getLinkForCode(code)} target="_blank" rel="noopener noreferrer">
-                                  <ExternalLink className="w-4 h-4 mr-1" /> Przejdź
+                                <a
+                                  href={getLinkForCode(code)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <ExternalLink className="w-4 h-4 mr-1" />{' '}
+                                  Przejdź
                                 </a>
                               </Button>
                             </div>
@@ -263,20 +331,22 @@ export default function AeroLinkPage() {
                 <History className="w-5 h-5 text-primary" />
                 <div>
                   <CardTitle className="text-lg">Twoja Historia</CardTitle>
-                  <CardDescription>Zapisane pytania ({history.length}).</CardDescription>
+                  <CardDescription>
+                    Zapisane pytania ({history.length}).
+                  </CardDescription>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button 
-                  onClick={() => openAllLinks(history)} 
+                <Button
+                  onClick={() => openAllLinks(history)}
                   variant="secondary"
                   size="sm"
                   className="font-semibold"
                 >
                   <ExternalLink className="w-4 h-4 mr-2" /> Otwórz historię
                 </Button>
-                <Button 
-                  onClick={clearHistory} 
+                <Button
+                  onClick={clearHistory}
                   variant="ghost"
                   size="sm"
                   className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
@@ -289,40 +359,54 @@ export default function AeroLinkPage() {
               <Table>
                 <TableHeader className="bg-muted/50">
                   <TableRow>
-                    <TableHead className="w-[200px] font-bold">Numer Pytania</TableHead>
+                    <TableHead className="w-[200px] font-bold">
+                      Numer Pytania
+                    </TableHead>
                     <TableHead className="font-bold">Temat</TableHead>
-                    <TableHead className="text-right font-bold">Akcja</TableHead>
+                    <TableHead className="text-right font-bold">
+                      Akcja
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {[...history].reverse().map((code) => {
                     const prefix = code.split('-')[0];
                     return (
-                      <TableRow key={`hist-${code}`} className="hover:bg-primary/5 transition-colors group">
+                      <TableRow
+                        key={`hist-${code}`}
+                        className="hover:bg-primary/5 transition-colors group"
+                      >
                         <TableCell className="font-mono font-semibold">
-                          <Badge variant="outline" className="text-primary border-primary/30 group-hover:border-primary">
+                          <Badge
+                            variant="outline"
+                            className="text-primary border-primary/30 group-hover:border-primary"
+                          >
                             {code}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-muted-foreground group-hover:text-foreground">
-                          {TOPIC_MAPPINGS[prefix] || "Nieznany temat"}
+                          {TOPIC_MAPPINGS[prefix] || 'Nieznany temat'}
                         </TableCell>
                         <TableCell className="text-right space-x-2">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={() => removeFromHistory(code)}
                             className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            asChild 
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            asChild
                             className="text-primary hover:text-primary hover:bg-primary/10"
                           >
-                            <a href={getLinkForCode(code)} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={getLinkForCode(code)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               <ExternalLink className="w-4 h-4 mr-1" /> Przejdź
                             </a>
                           </Button>
@@ -340,9 +424,13 @@ export default function AeroLinkPage() {
           <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 opacity-50">
             <ClipboardList className="w-16 h-16 text-primary/40" />
             <div className="space-y-1">
-              <h3 className="text-xl font-semibold">Zacznij od wklejenia notatek</h3>
+              <h3 className="text-xl font-semibold">
+                Zacznij od wklejenia notatek
+              </h3>
               <p className="text-sm max-w-sm mx-auto">
-                System automatycznie przetworzy tekst, wygeneruje linki do bazy pytań PPL(A) i pozwoli Ci je zapisać. Twoje dane nie opuszczają Twojej przeglądarki.
+                System automatycznie przetworzy tekst, wygeneruje linki do bazy
+                pytań PPL(A) i pozwoli Ci je zapisać. Twoje dane nie opuszczają
+                Twojej przeglądarki.
               </p>
             </div>
           </div>
