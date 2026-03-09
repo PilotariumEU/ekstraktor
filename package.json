@@ -2,8 +2,9 @@
   "name": "ekstraktor-pilotarium",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack -p 9002",
+    "dev": "next dev -p 9002",
     "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "eslint .",
@@ -11,18 +12,6 @@
     "test": "jest",
     "format": "prettier --write .",
     "prepare": "husky"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.ts"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!(lucide-react)/)"
-    ]
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
@@ -54,7 +43,7 @@
     "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "lucide-react": "^0.475.0",
-    "next": "15.5.9",
+    "next": "^15.5.12",
     "patch-package": "^8.0.0",
     "react": "^19.2.1",
     "react-day-picker": "^9.11.3",
@@ -66,21 +55,18 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/preset-env": "^7.29.0",
-    "@babel/preset-react": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
     "@eslint/eslintrc": "^3.3.5",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^20",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.37",
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.1",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
     "@typescript-eslint/parser": "^8.57.0",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.35",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.1.6",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",

@@ -72,7 +72,7 @@ export default function AeroLinkPage() {
       }
     }
     setIsHydrated(true);
-  }, []);
+  }, [toast]);
 
   const extractedCodes = useMemo(
     () => extractQuestionCodes(inputText),

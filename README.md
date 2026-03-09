@@ -17,6 +17,37 @@ Projekt zawiera plik konfigurujący **Dev Container** — po otwarciu folderu w 
 
 Jeśli z jakiegoś powodu pracujesz poza devcontainerem, możesz oczywiście ręcznie uruchomić `npm install` przed pierwszym startem, oraz `npm run dev`.
 
+## Rozwój i testowanie
+
+Projekt zawiera skonfigurowane narzędzia do zapewnienia jakości kodu:
+
+- **Uruchomienie testów:**
+  ```bash
+  npm run test
+  ```
+
+- **Sprawdzenie linting (ESLint):**
+  ```bash
+  npm run lint
+  ```
+
+- **Sprawdzenie typów TypeScript:**
+  ```bash
+  npm run typecheck
+  ```
+
+- **Budowanie aplikacji do produkcji:**
+  ```bash
+  npm run build
+  ```
+
+- **Formatowanie kodu (Prettier):**
+  ```bash
+  npm run format
+  ```
+
+Zalecane jest uruchamianie tych komend przed każdym commitem, aby zapewnić jakość kodu.
+
 ## Kontrybuowanie do projektu na GitHubie
 
 1. **Sforkuj** repozytorium na GitHubie, aby mieć prywatną kopię w swoim profilu.
@@ -32,3 +63,21 @@ Jeśli z jakiegoś powodu pracujesz poza devcontainerem, możesz oczywiście rę
 5. Wypchnij gałąź na zdalne repozytorium (`git push origin nazwa-galezi`).
 6. Na stronie oryginalnego repozytorium otwórz Pull Request wskazując na swoją gałąź z forka i opisz proponowane zmiany.
    > Dzięki za zainteresowanie projektem! Twoje poprawki pomagają uczynić aplikację lepszą dla wszystkich.
+
+## Podziękowania
+
+Ten projekt korzysta z opensourcowych bibliotek i narzędzi. Szczególne podziękowania dla:
+
+- **Next.js**
+- **React**
+- **Tailwind CSS**
+- **Radix UI**
+- **Lucide React**
+- **React Hook Form**
+- **Zod**
+- **Jest** 
+- **ESLint**
+- **Prettier**
+- **TypeScript**
+
+Dziękuję wszystkim maintainerom i społecznościom tych projektów za ich wkład w ekosystem open source!

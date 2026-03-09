@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'ekstraktor.pilotarium.eu',
   description:
     'Automatyczny ekstraktor pytań lotniczych z Twoich notatek. 100% prywatności, dane przetwarzane lokalnie.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -22,6 +25,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
