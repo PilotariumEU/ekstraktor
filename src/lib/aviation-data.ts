@@ -1,5 +1,7 @@
 export const TOPIC_MAPPINGS: Record<string, string> = {
   PL010: 'Prawo lotnicze',
+  PL099: 'Prawo lotnicze',
+  PL100: 'Prawo lotnicze',
   PL020: 'Ogólna wiedza o statku powietrznym',
   PL030: 'Osiągi i planowanie lotu',
   PL040: 'Człowiek - możliwości i ograniczenia',
@@ -12,6 +14,8 @@ export const TOPIC_MAPPINGS: Record<string, string> = {
 
 export const SLUG_MAPPINGS: Record<string, string> = {
   PL010: 'law',
+  PL099: 'law',
+  PL100: 'law',
   PL020: 'airship',
   PL030: 'performance',
   PL040: 'human',
